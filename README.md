@@ -3,19 +3,21 @@ Aren't we all tired of using the same boring default menu to spawn a police car 
   Well if that's the case, I've the perfect solution for you! The best part, it's FREE.
 
 Framework
+
 ESX
 
 Configuration
+
 Job, positions, images, names, hash etc. With this effective config you can change almost everything which makes it easier for server owners.
 
-Escrow Asset
- Yes, only lua file is encrypted.
 
 Optimization
+
 Idle 0.00ms
 Usage 0.03 - 0.05ms
 
 Video
+
 https://youtu.be/NywbzZpnvJ8?si=_q_5PFkaM-5H8dZY
 
 NOTE: YOU DON'T HAVE THE PERMISSIONS TO SELL THIS RESOURCE AT ANY CIRCUMSTANCES. DOESN'T MATTER IF YOU MODIFY IT OR NOT.
