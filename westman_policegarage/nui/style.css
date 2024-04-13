@@ -61,7 +61,7 @@ body {
   opacity: 0.9;
   }
 
-#police {
+#corner-title {
   opacity: 0.9;
   position: absolute;
   margin-right: 870px;
@@ -70,6 +70,7 @@ body {
   font-family: "Mukta", sans-serif;
   font-weight: 500;
   font-style: normal;
+  color: color;
 }
 
 #exit-button {
@@ -90,9 +91,13 @@ body {
   display: grid;
   grid-template-columns: 350px 350px 350px;
   max-height: 650px; 
-  overflow-y: auto; 
- 
+  overflow: scroll;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 
 #grid-container > div {
   background: rgba(226, 226, 226, 0.801);
@@ -102,7 +107,6 @@ body {
   text-align: center;
   color: white;
   border-radius: 20px;
-
   }
 
 #header-title {

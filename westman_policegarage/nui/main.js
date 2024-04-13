@@ -27,7 +27,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const CloseButton = document.getElementById('exit-button');
   CloseButton.addEventListener('click', () => {
-    fetch('https://westman_policegarage/exit');
+    fetch('https://westman_policegarage/exit', {
+      method: 'POST'
+    });
   });
 
   const YesPopUpButton = document.getElementById('popup-button-yes');
@@ -69,32 +71,15 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
 
-
-  
-
   YesPopUpButton.addEventListener('click', () => {
-    const hash = currentVehicle; 
+    const hash = currentVehicle ;
+    var CarData = JSON.stringify(hash);
     ClosePopUp();
-    console.log("Hash before sending:", hash); 
-    var CarData = JSON.stringify(hash); 
-    console.log("jsonString before sending:", CarData); 
-  
     fetch('https://westman_policegarage/spawnvehicle', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: CarData 
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to spawn vehicle');
-      }
-    })
-    .catch(error => {
-    });
-  });
-  
+    method: 'POST',
+    body: CarData
+   });
+  })
   
 
   function ClosePopUp() {

@@ -1,48 +1,57 @@
-
+if Config.Framework == "QBCore" then
+QBCore = exports[Config.Engine]:GetCoreObject()
+elseif Config.Framework == "ESX" then 
+  ESX = exports[Config.Engine]:getSharedObject()
+end 
 
 local NUIOpen = false
 
+if Config.Framework == "ESX" then 
+  PlayerData = ESX.GetPlayerData()
+elseif Config.Framework == "QBCore" then
+  local PlayerData = QBCore.Functions.GetPlayerData()
+end
 Citizen.CreateThread(function()
-while true do 
-  local sleep = 2000
- if ESX.PlayerData.job and ESX.PlayerData.job.name == Config.Job then
-for data, v in pairs(Config.Positions) do
-  local PlayerPed = PlayerPedId()
-  local PlayerPedCoords = GetEntityCoords(PlayerPed)
-  local distance = #(PlayerPedCoords - v)
-  if distance <= 3.0 then 
-    sleep = 0
-    DrawText3D(v.x, v.y, v.z, ""..Strings.OpenGarage.."")
-    if IsControlJustReleased(0, 38) then
-      ESX.ShowNotification(Strings.OpenedGarage)
-      local data = json.encode(Config.GarageVehicles) 
-     
-      SendNUIMessage({
-        action = 'sendData',
-        data = data
-      })
-      OpenNUI()
-    end 
-  end
-
-      local distance2 = #(PlayerPedCoords - Config.StoreCar)
-      local IsPedVehicle = IsPedInAnyVehicle(PlayerPed)
-      if IsPedVehicle then
-        if distance2 <= 4.0 then
-          sleep = 0
+  while true do 
+    local sleep = 2000
+    if PlayerData.job and PlayerData.job.name == Config.Job then
+      for _, v in pairs(Config.Positions) do
+        local PlayerPed = PlayerPedId()
+        local PlayerPedCoords = GetEntityCoords(PlayerPed)
+        local distance = #(PlayerPedCoords - vector3(v.x, v.y, v.z))
+        if distance <= 3.0 then
+          sleep = 1
+          DrawText3D(v.x, v.y, v.z, ""..Strings.OpenGarage.."")
+          
+          if IsControlJustReleased(0, 38) then
+            if Config.Framework == "QBCore" then
+            QBCore.Functions.Notify(Strings.OpenedGarage)
+          elseif Config.Framework == "ESX" then 
+            ESX.ShowNotification(Strings.OpenedGarage)
+            SendNUIMessage({ action = 'sendData', data = json.encode(Config.GarageVehicles) })
+            OpenNUI()
+          end
+        end
+      end 
+      
+        local distance2 = #(PlayerPedCoords - Config.StoreCar)
+        if IsPedInAnyVehicle(PlayerPed) and distance2 <= 4.0 then
           DrawMarker(6, Config.StoreCar.x, Config.StoreCar.y, Config.StoreCar.z - 0.99, 0.0, 0.0, 0.0, 270.0, 0.0, 0.0, 3.0, 3.0, 3.0, 0, 0, 255, 100, false, true, 2, false, false, false, false)
           DrawText3D(Config.StoreCar.x, Config.StoreCar.y, Config.StoreCar.z, ""..Strings.DeleteCar.."")
-
           if IsControlJustPressed(0, 74) then 
-          ESX.Game.DeleteVehicle(GetVehiclePedIsIn(PlayerPed))
-      end 
+            if Config.Framework == "ESX" then
+              ESX.Game.DeleteVehicle(GetVehiclePedIsIn(PlayerPed))
+            elseif Config.Framework == "QBCore" then
+            QBCore.Functions.DeleteVehicle(GetVehiclePedIsIn(PlayerPed))
+          end 
+        end
+      end
     end
   end
+    Wait(sleep)
   end
-end
-Wait(sleep)
-end
 end)
+
 
 function OpenNUI()
 if not NUIOpen then 
@@ -63,7 +72,11 @@ end
 RegisterNUICallback('exit', function()
 if NUIOpen then
   OpenNUI()
-  ESX.ShowNotification(""..Strings.ExitedGarage.."")
+  if Config.Framework == "QBCore" then 
+    QBCore.Functions.Notify(Strings.ExitedGarage)
+  elseif Config.Framework == "ESX" then 
+    ESX.ShowNotification(Strings.ExitedGarage)
+  end
 end
 end)
 
@@ -75,13 +88,21 @@ RegisterNUICallback('spawnvehicle', function(CarData)
   if NUIOpen then
     OpenNUI()
     if not IsPositionOccupied(coords.x, coords.y, coords.z, 5.0, false, true, false, nil, nil, 0, nil) then
-    ESX.Game.SpawnVehicle(CarData, Config.SpawnPosition, heading, function() 
-    end)
-  else
-    ESX.ShowNotification(""..Strings.BlockingSpawn.."")
-  end
+      if Config.Framework == "ESX" then
+        ESX.Game.SpawnVehicle(CarData, Config.SpawnPosition, heading, function() 
+        end)
+      else
+        QBCore.Functions.SpawnVehicle(CarData, cb, coords, true, true)
+      end
+    else
+      ESX.ShowNotification(""..Strings.BlockingSpawn.."")
+    end
   end
 end)
+
+
+
+
 
 
 

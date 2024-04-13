@@ -1,6 +1,6 @@
 fx_version 'cerulean'
 game 'gta5'
-lua54 'yes'
+
 author "Westman Resourcez"
 
 ui_page 'nui/index.html'
@@ -17,13 +17,5 @@ files {
   'nui/index.html',
   'nui/style.css',
   'nui/main.js',
-  'nui/polis.png'
-}
-
-escrow_ignore {
-  'nui/index.html',
-  'nui/style.css',
   'nui/polis.png',
-  'configuration/config.lua',
-  'configuration/strings.lua'
 }

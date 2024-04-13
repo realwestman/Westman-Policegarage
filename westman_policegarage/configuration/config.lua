@@ -1,4 +1,9 @@
 Config = {
+
+    Engine = 'es_extended',
+    Framework = 'ESX',
+    
+
   Positions = {
     vector3(458.9705, -1017.0967, 28.1618), -- Positions on where you can access the garage
     vector3(443.1244, -1012.8585, 28.5929)
