@@ -1,16 +1,13 @@
 if Config.Framework == "QBCore" then
-QBCore = exports[Config.Engine]:GetCoreObject()
+  QBCore = exports[Config.Engine]:GetCoreObject()
+  PlayerData = QBCore.Functions.GetPlayerData()
 elseif Config.Framework == "ESX" then 
   ESX = exports[Config.Engine]:getSharedObject()
+  PlayerData = ESX.GetPlayerData()
 end 
 
 local NUIOpen = false
 
-if Config.Framework == "ESX" then 
-  PlayerData = ESX.GetPlayerData()
-elseif Config.Framework == "QBCore" then
-  local PlayerData = QBCore.Functions.GetPlayerData()
-end
 Citizen.CreateThread(function()
   while true do 
     local sleep = 2000
@@ -54,30 +51,30 @@ end)
 
 
 function OpenNUI()
-if not NUIOpen then 
-  NUIOpen = true 
-  SetNuiFocus(true, true)
-  SendNUIMessage({
-    action = 'open'
-  })
-else
-  NUIOpen = false 
-  SetNuiFocus(false, false)
-  SendNUIMessage({
-    action = 'close'
-  })
-end
+  if not NUIOpen then 
+    NUIOpen = true 
+    SetNuiFocus(true, true)
+    SendNUIMessage({
+      action = 'open'
+    })
+  else
+    NUIOpen = false 
+    SetNuiFocus(false, false)
+    SendNUIMessage({
+      action = 'close'
+    })
+  end
 end
 
 RegisterNUICallback('exit', function()
-if NUIOpen then
-  OpenNUI()
-  if Config.Framework == "QBCore" then 
-    QBCore.Functions.Notify(Strings.ExitedGarage)
-  elseif Config.Framework == "ESX" then 
-    ESX.ShowNotification(Strings.ExitedGarage)
+  if NUIOpen then
+    OpenNUI()
+    if Config.Framework == "QBCore" then 
+      QBCore.Functions.Notify(Strings.ExitedGarage)
+    elseif Config.Framework == "ESX" then 
+      ESX.ShowNotification(Strings.ExitedGarage)
+    end
   end
-end
 end)
 
 
@@ -99,11 +96,6 @@ RegisterNUICallback('spawnvehicle', function(CarData)
     end
   end
 end)
-
-
-
-
-
 
 
 
