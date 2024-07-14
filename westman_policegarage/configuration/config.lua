@@ -1,21 +1,17 @@
 Config = {
-
     Engine = 'es_extended',
     Framework = 'ESX',
     
-
   Positions = {
     vector3(458.9705, -1017.0967, 28.1618), -- Positions on where you can access the garage
     vector3(443.1244, -1012.8585, 28.5929)
    },
+    
   Job = 'police', -- What job does the player need to access the policegarage
   SpawnPosition = vector3(450.7665, -1025.0762, 28.5595), -- Where the car spawns
   SpawnPositionHeading = 4.0112, -- The heading of where the car spawns
   StoreCar = vector3(457.2293, -1024.2261, 28.4243), -- Positions on where to return the car into the garage
 
-
-
-  
    GarageVehicles = { 
     {
         name = "Saab 95",
