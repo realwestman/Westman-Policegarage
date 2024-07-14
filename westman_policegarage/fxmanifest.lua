@@ -9,8 +9,7 @@ client_script 'client/main.lua'
 
 shared_scripts {
   'configuration/config.lua',
-  'configuration/strings.lua',
-  '@es_extended/imports.lua'
+  'configuration/strings.lua'
 }
 
 files {
