@@ -1,17 +1,14 @@
 if Config.Framework == "QBCore" then
-QBCore = exports[Config.Engine]:GetCoreObject()
+  QBCore = exports[Config.Engine]:GetCoreObject()
+  PlayerData = QBCore.Functions.GetPlayerData()
 elseif Config.Framework == "ESX" then 
   ESX = exports[Config.Engine]:getSharedObject()
+  PlayerData = ESX.GetPlayerData()
 end 
 
 local NUIOpen = false
 
-if Config.Framework == "ESX" then 
-  PlayerData = ESX.GetPlayerData()
-elseif Config.Framework == "QBCore" then
-  local PlayerData = QBCore.Functions.GetPlayerData()
-end
-Citizen.CreateThread(function()
+CreateThread(function()
   while true do 
     local sleep = 2000
     if PlayerData.job and PlayerData.job.name == Config.Job then
@@ -80,8 +77,6 @@ if NUIOpen then
 end
 end)
 
-
-
 RegisterNUICallback('spawnvehicle', function(CarData)
   local coords = Config.SpawnPosition
   local heading = Config.SpawnPositionHeading 
@@ -99,13 +94,6 @@ RegisterNUICallback('spawnvehicle', function(CarData)
     end
   end
 end)
-
-
-
-
-
-
-
 
 function DrawText3D(x, y, z, text)
   local onScreen, screenX, screenY = World3dToScreen2d(x, y, z)
