@@ -1,7 +1,7 @@
 Config = {
     -- Your basename on your server. "es_extended" for ESX and "qb-core" for QB-Core
     Engine = 'es_extended',
-    -- "ESX" or "QB-Core"
+    -- "ESX" or "QBCore"
     Framework = 'ESX',
     
   Positions = {
