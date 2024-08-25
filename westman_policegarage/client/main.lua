@@ -8,7 +8,6 @@ local NUIOpen = false
 
 CreateThread(function()
   while true do 
-    
     if Config.Framework == "QBCore" then
       PlayerData = QBCore.Functions.GetPlayerData()
     elseif Config.Framework == "ESX" then 
