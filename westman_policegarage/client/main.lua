@@ -1,12 +1,22 @@
 if Config.Framework == "QBCore" then
   QBCore = exports[Config.Engine]:GetCoreObject()
-  PlayerData = QBCore.Functions.GetPlayerData()
 elseif Config.Framework == "ESX" then 
   ESX = exports[Config.Engine]:getSharedObject()
-  PlayerData = ESX.GetPlayerData()
 end 
 
 local NUIOpen = false
+
+CreateThread(function()
+  while true do 
+    
+    if Config.Framework == "QBCore" then
+      PlayerData = QBCore.Functions.GetPlayerData()
+    elseif Config.Framework == "ESX" then 
+      PlayerData = ESX.GetPlayerData()
+    end
+    Wait(30000)
+  end
+  end)
 
 CreateThread(function()
   while true do 
@@ -33,6 +43,7 @@ CreateThread(function()
       
         local distance2 = #(PlayerPedCoords - Config.StoreCar)
         if IsPedInAnyVehicle(PlayerPed) and distance2 <= 4.0 then
+          sleep = 1
           DrawMarker(6, Config.StoreCar.x, Config.StoreCar.y, Config.StoreCar.z - 0.99, 0.0, 0.0, 0.0, 270.0, 0.0, 0.0, 3.0, 3.0, 3.0, 0, 0, 255, 100, false, true, 2, false, false, false, false)
           DrawText3D(Config.StoreCar.x, Config.StoreCar.y, Config.StoreCar.z, ""..Strings.DeleteCar.."")
           if IsControlJustPressed(0, 74) then 
